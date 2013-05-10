@@ -1,0 +1,126 @@
+bindkey '\e[3~' delete-char # del
+bindkey ';5D' backward-word # ctrl+left
+bindkey ';5C' forward-word #ctrl+right
+bindkey '^[[H' beginning-of-line #ctrl+right
+bindkey '^[[F' end-of-line
+
+autoload -Uz compinit promptinit zcalc vcs_info compinit promptinit;
+compinit
+
+zstyle ':completion:*' completer _expand _complete _ignored
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
+zstyle ':completion:*' max-errors 1
+zstyle ':completion:*' menu select=long-list select=0
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+zstyle :compinstall filename '/home/zi/.zshrc'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cmd'
+zstyle ':completion:*:processes-names' command 'ps axho command' 
+zstyle ':vcs_info:*' enable svn git
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' stagedstr "+"
+zstyle ':vcs_info:*' unstagedstr "!"
+zstyle ':vcs_info:*' formats '[%s:%b%F{red}%c%u%F{green}]'
+setopt PROMPT_SUBST
+
+hg_branch() {
+    hg branch 2> /dev/null | awk '{ print "[hg:" $1 }'
+}
+
+hg_dirty() {
+    [ $(hg status 2> /dev/null | wc -l) != 0 ] && echo -e "%F{red}*%F{green}]"
+    [ $(hg status 2>&1 | wc -l) = 0 ] && echo -e "]"
+}
+
+precmd () { 
+    vcs_info 
+    HG="$(hg_branch)$(hg_dirty)"
+}
+
+extract () {
+	if [ -f $1 ] ; then
+ 		case $1 in
+			*.tar.bz2)   tar xjf $1        ;;
+			*.tar.gz)    tar xzf $1     ;;
+			*.bz2)       bunzip2 $1       ;;
+			*.rar)       unrar x $1     ;;
+			*.gz)        gunzip $1     ;;
+			*.tar)       tar xf $1        ;;
+			*.tbz2)      tar xjf $1      ;;
+			*.tgz)       tar xzf $1       ;;
+			*.zip)       unzip $1     ;;
+			*.Z)         uncompress $1  ;;
+			*.7z)        7z x $1    ;;
+			*.tbz)       tar xjvf  ;;
+			*)           echo "я не в курсе как распаковать '$1'..." ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+} 
+
+# упаковка в архив
+pk () {
+ if [ $1 ] ; then
+	case $1 in
+		tbz)       tar cjvf $2.tar.bz2 $2      ;;
+		tgz)       tar czvf $2.tar.gz  $2       ;;
+		tar)      tar cpvf $2.tar  $2       ;;
+		bz2)    bzip $2 ;;
+		gz)        gzip -c -9 -n $2 > $2.gz ;;
+		zip)       zip -r $2.zip $2   ;;
+		7z)        7z a $2.7z $2    ;;
+		*)         echo "'$1' cannot be packed via pk()" ;;
+	esac
+ else
+	echo "'$1' is not a valid file"
+ fi
+}
+
+hgrm (){
+	hg st | grep "?" | sed "s/?//" | xargs rm
+}
+
+origrm(){
+	find -name "*.orig" -exec rm -rf {} \;
+}
+
+if [[ $EUID == 0 ]]
+then
+	PROMPT=$'%{\e[1;31m%}%n %{\e[1;34m%}%~ #%{\e[0m%}%F{green}${HG}${vcs_info_msg_0_}%F ' # user dir %
+else
+	PROMPT=$'%{\e[1;32m%}%n %{\e[1;34m%}%~ %{\e[0m%}%F{green}${HG}${vcs_info_msg_0_}%F%{\e[1;34m%} %# %F' # root dir #
+fi
+
+RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%} ' # right prompt with timei
+
+alias ls='ls -al --color=auto'
+alias grep='grep --colour=auto'
+alias in="sudo aptitude install --with-recommends -y"
+alias up="sudo apt-get update && sudo aptitude full-upgrade"
+alias desk="plasma-desktop > /dev/null 2> /dev/null&"
+
+setopt autocd
+
+hash -d proj=/home/zi/project/
+hash -d p=/home/zi/project/active/
+hash -d other=/home/zi/project/other/
+hash -d www=/home/www/
+hash -d conf=/home/zi/conf/
+hash -d build=/home/zi/Projects/build/
+hash -d prog='/home/zi/Документы/Linux/Программы'
+hash -d slices='/home/www/docs/zinc.lo/typesetting/Макеты/images/'
+hash -d desctop='/home/zi/Рабочий стол/'
+
+setopt CORRECT_ALL
+SPROMPT="Ошибка! Вы хотели ввести %r вместо %R? ([Y]es/[N]o/[E]dit/[A]bort) "
+
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/zi/bin:/usr/local/bin:

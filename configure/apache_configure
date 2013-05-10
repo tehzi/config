@@ -1,0 +1,2 @@
+#/bin/bash
+./configure --prefix=/opt/httpd -enable-modules=all --enable-mpm=worker --enable-suexec --enable-rewrite --with-included-apr --enable-so

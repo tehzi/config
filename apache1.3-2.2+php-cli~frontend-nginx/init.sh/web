@@ -1,0 +1,64 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          skeleton
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Example initscript
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
+### END INIT INFO
+
+# Author: Foo Bar <foobar@baz.org>
+#
+# Please remove the "Author" lines above and replace them
+# with your own name if you copy and modify this script.
+
+# Do NOT "set -e"
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+pid=/var/run/httpd.pid
+pid_nginx=/var/run/nginx.pid
+proxy=/usr/local/nginx/sbin
+name=web
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+start(){
+	/usr/local/bin/apachectl -k start 2>/dev/null
+# 	/usr/local/bin/nginx 2>/dev/null
+	echo "Starting web"
+	log_end_msg 0
+}
+
+stop(){
+	/usr/local/bin/apachectl -k stop 2>/dev/null
+# 	/usr/local/bin/nginx -s stop 2>/dev/null
+	echo "Stoping web"
+	log_end_msg 0
+}
+
+case "$1" in
+	start)
+		start
+	;;
+	
+	stop)
+		stop
+	;;
+	
+	restart)
+		stop
+		sleep 1
+		echo ""
+		start
+	;;
+	
+	*)
+		N=/etc/init.d/$NAME
+		echo "Usage: $N {start|stop|restart}" >&2
+		exit 1
+	;;
+esac
+
+exit 0

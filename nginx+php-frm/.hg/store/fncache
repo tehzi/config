@@ -1,0 +1,8 @@
+data/nginx/nginx.conf.i
+data/php/php-frm.conf.i
+data/php.txt.i
+data/php/php.ini.i
+data/init.sh/web.i
+data/init.sh/php-frm.i
+data/nginx.txt.i
+data/nginx/fastcgi_params.i

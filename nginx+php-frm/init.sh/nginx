@@ -1,0 +1,43 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          scriptname
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+
+name=web
+start(){
+	/opt/nginx/sbin/nginx
+	echo "Starting $name"
+}
+
+stop(){
+	/opt/nginx/sbin/nginx -s stop
+	echo "Stoping $name"
+}
+
+case "$1" in
+	start)
+		start
+	;;
+	stop)
+		stop
+	;;
+	restart)
+		stop
+		sleep 1
+		echo ""
+		start
+	;;
+	*)
+		N=/etc/init.d/$NAME
+		echo "Usage: $N {start|stop|restart}" #>&2
+		exit 1
+	;;
+esac
+
+exit 0

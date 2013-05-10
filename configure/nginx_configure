@@ -1,0 +1,1 @@
+./auto/configure --prefix=/opt/nginx --with-http_ssl_module --with-http_addition_module --with-http_flv_module --with-rtsig_module 

@@ -1,0 +1,5 @@
+user = postfix
+password = igp7co
+hosts = 127.0.0.1
+dbname = postfix
+query = select 1 from `mailbox` where `username` = '%s'

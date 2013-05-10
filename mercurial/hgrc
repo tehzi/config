@@ -1,0 +1,20 @@
+#This is a Mercurial configuration file.
+[ui]
+username = overkin team <info@overkin.net>
+
+[extensions]
+hgext.extdiff =
+hgext.mq =
+graphlog = 
+progress=
+hgext.fetch=
+purge=
+
+[extdiff]
+cmd.kdiff3 =
+
+[merge-tools]
+kdiff3.args = $base $local $opther -o $output
+
+[hooks]
+changegroup = hg update

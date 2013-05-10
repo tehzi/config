@@ -1,0 +1,4 @@
+./configure --prefix=/opt/nginx --with-http_ssl_module --with-http_addition_module --with-http_flv_module --with-rtsig_module \
+--with-debug --with-cc-opt="-D NGX_UPSTREAM_KEEPALIVE_PATCHED" --add-module=/path/to/ngx_http_upstream_keepalive
+
+sudo apt-get install libpcre3-dev libssl-dev 

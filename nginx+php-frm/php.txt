@@ -1,0 +1,10 @@
+ linux:
+
+
+FRM:
+./configure --with-config-file-path=/opt/php-frm/ini --prefix=/opt/php-frm  --with-zlib --enable-mbstring --with-iconv --with-mysql --with-gd --with-mcrypt --enable-shared --with-bz2 --with-mysqli --with-regex --enable-fpm --enable-pcntl --with-fpm-user=www --with-fpm-group=www --with-readline --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/
+
+./configure --with-config-file-path=/opt/php-frm/ini --prefix=/opt/php-frm  --with-zlib --enable-mbstring --with-iconv --with-mysql --with-gd --with-jpeg-dir=../jpeg-8c/ --with-png-dir=../libpng-1.5.4  --with-mcrypt  --enable-shared --with-bz2 --with-mysqli --with-regex --enable-fpm --enable-pcntl --with-readline --with-fpm-user=www --with-fpm-group=www
+
+
+sudo apt-get install libxml2-dev zlib1g-dev libbz2-dev libjpeg8-dev libpng++-dev libmcrypt-dev libmysqlclient-dev libreadline6 libreadline-dev bison

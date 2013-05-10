@@ -1,0 +1,5 @@
+./configure --prefix=/opt/httpd --with-included-apr --enable-dav=shared --enable-proxy=shared --enable-so --enable-mods-shared=most
+
+./configure  --prefix=/opt/svn --with-apr=/usr/local/httpd --with-apr-util=/usr/local/httpd --with-neon=/opt/neon --with-apxs=/usr/local/httpd/bin/apxs --with-ssl
+
+

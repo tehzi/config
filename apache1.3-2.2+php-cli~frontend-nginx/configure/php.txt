@@ -1,0 +1,12 @@
+./configure --with-apxs2=/usr/local/bin/apxs --with-config-file-path=/opt/php/ini --prefix=/opt/php  --with-zlib --enable-mbstring --with-iconv --with-mysql --with-gd --with-mcrypt --with-jpeg-dir=./jpeg --enable-shared --with-bz2 --with-mysqli --with-regex
+--with-xsl
+
+# --with-fpm-user=zi --with-fpm-group=users
+freebsd:
+./configure --with-apxs2=/usr/local/sbin/apxs --with-config-file-path=/opt/php/ini --prefix=/opt/php  --with-zlib --enable-mbstring --with-iconv --with-mysql --with-gd --with-mcrypt --with-jpeg --enable-shared
+
+./configure --prefix=/opt/nginx
+
+--enable-fastcgi --enable-force-cgi-redirec
+
+sudo apt-get install libxml2-dev zlib1g-dev libbz2-dev libjpeg8-dev libpng++-dev libmcrypt-dev libmysqlclient-dev  

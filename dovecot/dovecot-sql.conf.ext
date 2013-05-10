@@ -1,0 +1,13 @@
+driver = mysql
+connect = host=localhost dbname=postfix user=dovecot password=PjXADptwxVttjtu9
+default_pass_scheme = PLAIN
+
+password_query = \
+SELECT username as user, domain, password \
+FROM mailbox WHERE username = ‘%u’ AND domain = ‘%d’ AND active
+
+user_query = \
+SELECT CONCAT(‘/var/mail/vmail’,maildir) as home, 1005 as uid, 8 as gid \
+FROM mailbox WHERE username = ‘%u’ AND domain = ‘%d’ and active
+
+iterate_query = SELECT username AS user FROM mailbox

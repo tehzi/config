@@ -1,0 +1,64 @@
+#!/bin/bash
+apxs=/usr/local/bin/apxs
+mods="
+mod_authn_file 
+mod_authn_file
+mod_authn_anon
+mod_authn_default
+mod_authn_alias
+mod_authz_host
+mod_authz_groupfile
+mod_authz_user
+mod_authz_dbm
+mod_authz_owner
+mod_authz_default
+mod_auth_basic
+mod_auth_digest
+mod_include
+mod_filter
+mod_substitute
+mod_log_config
+mod_env
+mod_mime_magic
+mod_expires
+mod_headers
+mod_usertrack
+mod_unique_id
+mod_setenvif
+mod_mime
+mod_status
+mod_autoindex
+mod_info
+mod_cgi
+mod_vhost_alias
+mod_negotiation
+mod_dir
+mod_imagemap
+mod_actions
+mod_alias
+mod_rewrite
+"
+DIR(){
+	if [[ -d $1 ]]
+	then
+		echo $1
+		cd $1
+		d=`ls $1`
+		for i in $1
+			do
+			for m in $mods
+				do
+				$apxs -i -c -n $m.so $m.c &> /dev/null
+			done
+			for D in $d
+				do
+				DIR $1/$D
+			done
+		done
+	fi
+}
+if [[ -d $1 ]]
+then
+	__DIR__=( $1 )
+	DIR $__DIR__
+fi
