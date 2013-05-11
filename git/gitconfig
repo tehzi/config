@@ -1,0 +1,17 @@
+[user]
+	email = zi.white.drago@gmail.com
+	name = zi.white
+[push]
+	default = simple
+[diff]
+    tool = kdiff3
+[merge]
+	tool = kdiff3
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+	st = status
+	ci = commit -v
+	kdiff = difftool --dir-diff -t kdiff3
