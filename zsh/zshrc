@@ -99,7 +99,7 @@ fi
 
 RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%} ' # right prompt with timei
 
-alias ls='ls -al --color=auto'
+alias ll='ls -al --color=auto'
 alias grep='grep --colour=auto'
 alias in="sudo aptitude install --with-recommends -y"
 alias up="sudo apt-get update && sudo aptitude full-upgrade"

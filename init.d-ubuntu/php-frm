@@ -1,62 +1,134 @@
-#!/bin/bash
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          scriptname
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
 
-## Fill in name of program here.
-PROG="pi"
-PROG_PATH="/usr/bin" ## Not need, but sometimes helpful (if $PROG resides in /opt for example).
-PROG_ARGS="10000000" 
-PID_PATH="/var/run/"
+php_fpm_BIN=/opt/php-frm/sbin/php-fpm
+php_fpm_CONF=/opt/php-frm/ini/php-frm.conf
+php_fpm_PID=/var/run/php-fpm.pid
 
-start() {
-    if [ -e "$PID_PATH/$PROG.pid" ]; then
-        ## Program is running, exit with error.
-        echo "Error! $PROG is currently running!" 1>&2
-        exit 1
-    else
-        ## Change from /dev/null to something like /var/log/$PROG if you want to save output.
-            $PROG_PATH/$PROG $PROG_ARGS 2>&1 >/dev/null &
-        echo "$PROG started"
-        touch "$PID_PATH/$PROG.pid"
-    fi
+
+php_opts="--fpm-config $php_fpm_CONF"
+
+
+wait_for_pid () {
+	try=0
+
+	while test $try -lt 35 ; do
+
+		case "$1" in
+			'created')
+			if [ -f "$2" ] ; then
+				try=''
+				break
+			fi
+			;;
+
+			'removed')
+			if [ ! -f "$2" ] ; then
+				try=''
+				break
+			fi
+			;;
+		esac
+
+		echo -n .
+		try=`expr $try + 1`
+		sleep 1
+
+	done
+
 }
-
-stop() {
-    if [ -e "$PID_PATH/$PROG.pid" ]; then
-        ## Program is running, so stop it
-        killall $PROG
-
-        rm "$PID_PATH/$PROG.pid"
-        
-        echo "$PROG stopped"
-    else
-        ## Program is not running, exit with error.
-        echo "Error! $PROG not started!" 1>&2
-        exit 1
-    fi
-}
-
-## Check to see if we are running as root first.
-## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
-if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root" 1>&2
-    exit 1
-fi
 
 case "$1" in
-    start)
-        start
-        exit 0
-    ;;
-    stop)
-        stop
-        exit 0
-    ;;
-    reload|restart|force-reload)
-        stop
-        start
-        exit 0
-    ;;
-    **)
-        echo "Usage: $0 {start|stop|reload}" 1>&2
-        exit 1
-    ;;
+	start)
+		echo -n "Starting php-fpm "
+
+		$php_fpm_BIN $php_opts
+
+		if [ "$?" != 0 ] ; then
+			echo " failed"
+			exit 1
+		fi
+
+		wait_for_pid created $php_fpm_PID
+
+		if [ -n "$try" ] ; then
+			echo " failed"
+			exit 1
+		else
+			echo " done"
+		fi
+	;;
+
+	stop)
+		echo -n "Gracefully shutting down php-fpm "
+
+		if [ ! -r $php_fpm_PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -QUIT `cat $php_fpm_PID`
+
+		wait_for_pid removed $php_fpm_PID
+
+		if [ -n "$try" ] ; then
+			echo " failed. Use force-exit"
+			exit 1
+		else
+			echo " done"
+		fi
+	;;
+
+	force-quit)
+		echo -n "Terminating php-fpm "
+
+		if [ ! -r $php_fpm_PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -TERM `cat $php_fpm_PID`
+
+		wait_for_pid removed $php_fpm_PID
+
+		if [ -n "$try" ] ; then
+			echo " failed"
+			exit 1
+		else
+			echo " done"
+		fi
+	;;
+
+	restart)
+		$0 stop
+		$0 start
+	;;
+
+	reload)
+
+		echo -n "Reload service php-fpm "
+
+		if [ ! -r $php_fpm_PID ] ; then
+			echo "warning, no pid file found - php-fpm is not running ?"
+			exit 1
+		fi
+
+		kill -USR2 `cat $php_fpm_PID`
+
+		echo " done"
+	;;
+
+	*)
+		echo "Usage: $0 {start|stop|force-quit|restart|reload}"
+		exit 1
+	;;
+
 esac
