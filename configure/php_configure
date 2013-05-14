@@ -1,2 +1,3 @@
+#/bin/bash
 ./configure --with-config-file-path=/opt/php-frm/ini --prefix=/opt/php-frm  --with-zlib --enable-mbstring --with-iconv --with-mysql --with-gd --with-mcrypt --enable-shared --with-bz2 --with-mysqli --with-regex --enable-fpm --enable-pcntl --with-fpm-user=www --with-fpm-group=www --with-readline --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/
  
