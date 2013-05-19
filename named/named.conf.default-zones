@@ -27,32 +27,17 @@ zone "255.in-addr.arpa" {
 	file "/etc/bind/db.255";
 };
 
-zone "zinc.lo" {
+zone "php54" {
 	type master;
-	file "/etc/bind/zinc.lo";
+	file "/etc/bind/php54.local";
 };
 
-zone "zinc.lan" {
+zone "apache" {
 	type master;
-	file "/etc/bind/zinc.lan";
+	file "/etc/bind/apache.local";
 };
 
-zone "zinc.win" {
+zone "archive" {
 	type master;
-	file "/etc/bind/zinc.win";
-};
-
-zone "zinc.win2" {
-	type master;
-	file "/etc/bind/zinc.win2";
-};
-
-zone "apache.lo" {
-	type master;
-	file "/etc/bind/numserv.lo";
-};
-
-zone "arhive.lo" {
-	type master;
-	file "/etc/bind/arhive.lo";
+	file "/etc/bind/archive.local";
 };
