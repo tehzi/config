@@ -111,10 +111,11 @@ hash -d proj=/home/zi/project/
 hash -d p=/home/zi/project/active/
 hash -d other=/home/zi/project/other/
 hash -d www=/home/www/
+hash -d html=/home/zi/project/html/
 hash -d conf=/home/zi/conf/
 hash -d build=/home/zi/Projects/build/
 hash -d prog='/home/zi/Документы/Linux/Программы'
-hash -d slices='/home/www/docs/zinc.lo/typesetting/Макеты/images/'
+hash -d slices='/home/zi/project/html/slices/images/'
 hash -d desctop='/home/zi/Рабочий стол/'
 
 setopt CORRECT_ALL

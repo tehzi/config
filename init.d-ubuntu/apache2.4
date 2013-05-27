@@ -10,8 +10,8 @@
 ### END INIT INFO
 
 ## Fill in name of program here.
-PROG="pi"
-PROG_PATH="/usr/bin" ## Not need, but sometimes helpful (if $PROG resides in /opt for example).
+PROG="apachectl"
+PROG_PATH="/usr/local/bin" ## Not need, but sometimes helpful (if $PROG resides in /opt for example).
 PROG_ARGS="-k start" 
 PID_PATH="/var/run/"
 
@@ -31,7 +31,7 @@ start() {
 stop() {
     if [ -e "$PID_PATH/$PROG.pid" ]; then
         ## Program is running, so stop it
-        killall $PROG
+        killall "httpd"
 
         rm "$PID_PATH/$PROG.pid"
         
