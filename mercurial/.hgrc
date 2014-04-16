@@ -1,0 +1,36 @@
+# This is a Mercurial configuration file.
+[ui]
+username = zi white <zi.white.drago@gmail.com>
+
+[extensions]
+hgext.extdiff =
+hgext.mq =
+children =
+graphlog = 
+hgk=
+#hgext.hgview=/usr/lib/pymodules/python2.7/hgext/hgview.py
+hgext.fetch=
+parentrevspec=
+progress=
+rebase = 
+transplant=
+purge=
+hgext.ftp = /home/zi/Projects/build/hgftp/ftp.py
+
+[extdiff]
+cmd.kdiff3 =
+
+[merge-tools]
+kdiff3.args = $base $local $opther -o $output
+
+[hgview]
+interface = qt
+
+[ftp]
+chmod_file  = 644
+chmod_dir   = 755
+global_tags = False
+prefix_tags = uploaded@
+
+[hooks]
+changegroup = hg update

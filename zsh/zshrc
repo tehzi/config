@@ -7,6 +7,7 @@ bindkey '^[[F' end-of-line
 autoload -Uz compinit promptinit zcalc vcs_info compinit promptinit;
 compinit
 
+
 zstyle ':completion:*' completer _expand _complete _ignored
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-colors ''
@@ -70,11 +71,12 @@ pk () {
 	case $1 in
 		tbz)       tar cjvf $2.tar.bz2 $2      ;;
 		tgz)       tar czvf $2.tar.gz  $2       ;;
-		tar)      tar cpvf $2.tar  $2       ;;
-		bz2)    bzip $2 ;;
+		tar)       tar cpvf $2.tar  $2       ;;
+		bz2)       bzip $2 ;;
 		gz)        gzip -c -9 -n $2 > $2.gz ;;
 		zip)       zip -r $2.zip $2   ;;
 		7z)        7z a $2.7z $2    ;;
+		rar)       rar a $2.rar $2  ;;
 		*)         echo "'$1' cannot be packed via pk()" ;;
 	esac
  else
@@ -99,7 +101,7 @@ fi
 
 RPROMPT=$'%{\e[1;34m%}%T%{\e[0m%} ' # right prompt with timei
 
-alias ll='ls -al --color=auto'
+alias ll='ls -alh --color=auto'
 alias grep='grep --colour=auto'
 alias in="sudo aptitude install --with-recommends -y"
 alias up="sudo apt-get update && sudo aptitude full-upgrade"
@@ -116,7 +118,8 @@ hash -d conf=/home/zi/conf/
 hash -d build=/home/zi/Projects/build/
 hash -d prog='/home/zi/Документы/Linux/Программы'
 hash -d slices='/home/zi/project/html/slices/images/'
-hash -d desctop='/home/zi/Рабочий стол/'
+hash -d desktop='/home/zi/Рабочий стол/'
+hash -d ya=/mnt/yandex
 
 setopt CORRECT_ALL
 SPROMPT="Ошибка! Вы хотели ввести %r вместо %R? ([Y]es/[N]o/[E]dit/[A]bort) "
@@ -124,4 +127,4 @@ SPROMPT="Ошибка! Вы хотели ввести %r вместо %R? ([Y]es
 SAVEHIST=100
 HISTFILE=~/.zsh_history
 
-PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/zi/bin:/usr/local/bin:
+PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/zi/bin:/usr/local/bin:/home/zi/project/other/go/bin:
