@@ -1,6 +1,6 @@
 [user]
-	email = zi.white.drago@gmail.com
-	name = zi.white
+	email = mikhail.vovrenchuk@firstlinesoftware.com
+	name = Mikhail Vovrenchuk
 [push]
 	default = simple
 [diff]
@@ -15,3 +15,9 @@
 	st = status
 	ci = commit -v
 	kdiff = difftool --dir-diff -t kdiff3
+	lg = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	br = branch
+[mergetool "diffmerge"]
+	cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
+[credential]
+	helper = cache

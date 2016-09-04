@@ -1,0 +1,47 @@
+set nocompatible
+set encoding=utf8
+set termencoding=utf-8
+set fileencodings=utf8,cp1251
+set undofile
+set undodir=~/.vim/undo/
+
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Bundle 'jlanzarotta/bufexplorer'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'terryma/vim-multiple-cursors'
+
+call vundle#end()
+
+filetype plugin indent on
+
+if has("autocmd")
+	autocmd BufRead *.sql set filetype=mysql      
+endif
+
+nmap <C-5> <esc>:BufExplorer<cr>
+vmap <C-5> <esc>:BufExplorer<cr>i
+imap <C-5> <esc>:BufExplorer<cr>i
+
+" F6 - предыдущий буфер
+nmap <C-6> :bp<cr>
+vmap <C-6> <esc>:bp<cr>i
+imap <C-6> <esc>:bp<cr>i
+
+" F7 - следующий буфер
+nmap <C-7> :bn<cr>
+vmap <C-7> <esc>:bn<cr>i
+imap <C-7> <esc>:bn<cr>i
+
+nmap <C-N>v :NERDTree<cr>
+vmap <C-N>v <esc>:NERDTree<cr>i
+imap <C-N>v <esc>:NERDTree<cr>i
+
+nmap <C-N>x :NERDTreeClose<cr>
+vmap <C-N>x <esc>:NERDTreeClose<cr>i
+imap <C-N>x <esc>:NERDTreeClose<cr>i

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+haproxy_path=/home/zi/conf/haproxy/home/haproxy.conf
+haproxy_conf=/etc/haproxy/haproxy.cfg
+reload_haproxy(){
+    addr=$(ifconfig | egrep 'eth|wlan|vmnet' -A1 | grep 'inet addr' | grep -v 'inet addr:127' | awk '{print $2}' | cut -d ":"  -f2 | sort -n | uniq)
+    haproxy=""
+    bind=""
+    for ip in $addr; do
+        bind="${bind}\n\ \ \ \ bind $ip:80"
+    done
+    bind=$(echo -e $bind | sed "1d;" | perl -ne "s/\./\\\\./g; print" | perl -ne "s/\n/\\\\n/g; print" | perl -ne "s/\\\\n$//; print")
+    for file in $haproxy_path/*.conf; do
+        output=$(cat $file | sed "/bind 127/a$bind")
+        echo $output
+        haproxy="$haproxy\n\n$output"
+    done
+    echo -e "$haproxy" > $haproxy_conf
+    service haproxy reload
+}
+
+reload_haproxy
+
+tail -f /var/log/syslog | grep --line-buffered NetworkManager | grep --line-buffered 'device state change' | grep --line-buffered activated | while read changed; do
+    reload_haproxy
+done
+
+exit 0

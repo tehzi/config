@@ -1,14 +1,15 @@
 #This is a Mercurial configuration file.
 [ui]
-username = overkin team <info@overkin.net>
+username = zi white <zi.white.drago@gmail.com>
 
 [extensions]
 hgext.extdiff =
 hgext.mq =
-graphlog = 
+graphlog =
 progress=
 hgext.fetch=
 purge=
+prompt=/home/zi/project/other/hg-prompt/prompt.py
 
 [extdiff]
 cmd.kdiff3 =

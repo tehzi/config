@@ -1,2 +1,32 @@
 #/bin/bash
-./configure --with-config-file-path=/opt/php-frm/ini --prefix=/opt/php-frm  --with-zlib --enable-mbstring --with-iconv --with-mysql --with-gd --with-mcrypt --enable-shared --with-bz2 --with-mysqli --with-regex --enable-fpm --enable-pcntl --with-fpm-user=www --with-fpm-group=www --with-readline --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/ --with-curl --with-pdo-mysql
+./configure  --with-config-file-path=/opt/php-frm/ini  \
+             --prefix=/opt/php-frm   \
+             --with-zlib  \
+             --enable-mbstring  \
+             --with-iconv  \
+             --with-mysql  \
+             --with-gd  \
+             --with-mcrypt  \
+             --enable-shared  \
+             --with-bz2  \
+             --with-mysqli  \
+             --with-regex  \
+             --enable-fpm  \
+             --enable-pcntl  \
+             --with-fpm-user=www  \
+             --with-fpm-group=www  \
+             --with-readline  \
+             --with-jpeg-dir=/usr/lib/x86_64-linux-gnu/  \
+             --with-curl  \
+             --with-pdo-mysql  \
+             --with-imap  \
+             --with-imap-ssl  \
+             --with-kerberos  \
+             --enable-sockets \
+             --with-freetype-dir=/usr/include/freetype2 \
+             --enable-gd-native-ttf \
+             --with-t1lib \
+             --with-xpm-dir=/usr/lib/x86_64-linux-gnu \
+             --enable-shmop \
+             --with-system-tzdata \
+             --with-openssl
