@@ -1,6 +1,8 @@
 [user]
-	email = mikhail.vovrenchuk@firstlinesoftware.com
-	name = Mikhail Vovrenchuk
+#	email = mikhail.vovrenchuk@firstlinesoftware.com
+#	name = Mikhail Vovrenchuk
+	email = zi.white.drago@gmail.com
+	name = Mikhail Zi
 [push]
 	default = simple
 [diff]
