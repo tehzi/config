@@ -8,6 +8,8 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
+. /usr/share/autojump/autojump.sh
+
 export FZF_BASE=$HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-junegunn-SLASH-fzf.git/
 
 source $HOME/conf/zsh/antigen.zsh
