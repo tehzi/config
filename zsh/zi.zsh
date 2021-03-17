@@ -12,8 +12,9 @@ zstyle ':completion:*:*:kill:*:processes' command 'ps --forest -A -o pid,user,cm
 zstyle ':completion:*:processes-names' command 'ps axho command'
 
 autoload -Uz vcs_info
-
-ssh_hosts=($hosts ${${${(f)"$(<$HOME/.ssh/known_hosts)"}%% *}%%,*}) # automatically remove duplicates from these arraystypeset -U ssh_hostszstyle ':completion:*:hosts' hosts $ssh_hostszstyle ':completion:*:(ssh|scp|sftp):*' tag-order '! users' #не добавлять юзера
+if [ -f $HOME/.ssh/known_hosts ]; then
+	ssh_hosts=($hosts ${${${(f)"$(<$HOME/.ssh/known_hosts)"}%% *}%%,*}) # automatically remove duplicates from these arraystypeset -U ssh_hostszstyle ':completion:*:hosts' hosts $ssh_hostszstyle ':completion:*:(ssh|scp|sftp):*' tag-order '! users' #не добавлять юзера
+fi
 
 hash -d proj=/home/zi/project/
 hash -d p=/home/zi/project/active/
