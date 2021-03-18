@@ -1,6 +1,8 @@
 PATH=$PATH:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/zi/bin:/usr/local/bin:/home/zi/project/other/go/bin:
 
 export TERM=xterm-256color
+export LC_ALL=en_US.utf-8 
+export LANG=en_US.utf-8
 
 zmodload zsh/pcre
 
