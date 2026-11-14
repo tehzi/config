@@ -1,4 +1,4 @@
-PATH=$PATH:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/zi/bin:/usr/local/bin:/home/zi/project/other/go/bin:
+PATH=$PATH:/Users/zi/bin
 
 export TERM=xterm-256color
 export LC_ALL=en_US.utf-8 
@@ -18,23 +18,23 @@ if [ -f $HOME/.ssh/known_hosts ]; then
 	ssh_hosts=($hosts ${${${(f)"$(<$HOME/.ssh/known_hosts)"}%% *}%%,*}) # automatically remove duplicates from these arraystypeset -U ssh_hostszstyle ':completion:*:hosts' hosts $ssh_hostszstyle ':completion:*:(ssh|scp|sftp):*' tag-order '! users' #не добавлять юзера
 fi
 
-hash -d proj=/home/zi/project/
-hash -d p=/home/zi/project/active/
-hash -d other=/home/zi/project/other/
-hash -d layout=/home/zi/project/active/layout
+hash -d proj=/Users/zi/projects/
+hash -d p=/Users/zi/projects/active/
+hash -d other=/Users/zi/projects/other/
+# hash -d layout=/Users/zi/projects/active/layout
 #hash -d www=/home/www/
 #hash -d html=/home/zi/project/html/
-hash -d conf=/home/zi/conf/
+hash -d conf=/Users/zi/config/
 #hash -d build=/home/zi/Projects/build/
 #hash -d prog='/home/zi/Документы/Linux/Программы'
 #hash -d slices='/home/zi/project/html/slices/images/'
-hash -d desktop='/home/zi/Рабочий стол/'
-hash -d ya=/mnt/yandex
-hash -d localhost=/home/www/docs/localhost
-hash -d s=/mnt/sites
-hash -d d='/home/zi/Загрузки/'
-hash -d dp='/home/zi/Рабочий стол'
-#hash -d archive='/home/zi/project/archive'
+hash -d desktop='/Users/zi/Рабочий стол/'
+# hash -d ya=/mnt/yandex
+# hash -d localhost=/home/www/docs/localhost
+# hash -d s=/mnt/sites
+hash -d d='/Users/zi/Загрузки/'
+hash -d dp='/Users/zi/Рабочий стол'
+hash -d archive='/Users/zi/project/archive'
 
 pk () {
 	if [ $1 ] ; then
@@ -81,3 +81,4 @@ alias ll='ls -alh --color=auto'
 alias nbo="netbeans --open"
 alias pl="print -l"
 # alias scp="sshpass -e scp"
+

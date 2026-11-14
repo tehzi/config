@@ -8,21 +8,22 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
-. /usr/share/autojump/autojump.sh
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-export FZF_BASE=$HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-junegunn-SLASH-fzf.git/
+#export FZF_BASE=$HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-junegunn-SLASH-fzf.git/
 
-source $HOME/conf/zsh/antigen.zsh
-source $HOME/conf/zsh/zi.zsh
+source $HOME/config/zsh/antigen.zsh
+source $HOME/config/zsh/zi.zsh
 
 antigen use oh-my-zsh
 
 antigen bundle autojump
+antigen bundle brew
 antigen bundle command-not-found
 antigen bundle common-aliases
 antigen bundle cp
-antigen bundle debian
-antigen bundle ubuntu
+# antigen bundle debian
+# antigen bundle ubuntu
 antigen bundle dircycle
 antigen bundle dirhistory
 antigen bundle docker
@@ -51,7 +52,46 @@ antigen theme bira
 
 antigen apply
 
-source <(kubectl completion zsh)
+export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+
+# source <(kubectl completion zsh)
 alias k=kubectl
 complete -F __start_kubectl k
 
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+
+load-nvmrc # The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/zi/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# opencode
+export PATH=/Users/zi/.opencode/bin:$PATH
+
+# Added by cua-driver-rs installer — see https://github.com/trycua/cua
+export PATH="/Users/zi/.local/bin:$PATH"
